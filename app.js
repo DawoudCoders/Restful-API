@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const { getTopics } = require("./controllers");
-const { pathFindingError } = require("./errorHandling.controllers");
+const { getTopics } = require("./controllers/controllers");
+const { pathFindingError } = require("./controllers/errorHandling.controllers");
 
 app.use(express.json());
 

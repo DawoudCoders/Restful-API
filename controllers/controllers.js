@@ -1,4 +1,4 @@
-const { fetchTopics } = require("./models");
+const { fetchTopics } = require("../models");
 
 exports.getTopics = (req, res, next) => {
   console.log("in controller");
