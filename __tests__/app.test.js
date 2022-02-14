@@ -18,7 +18,6 @@ describe("Get api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then(({ body }) => {
-        console.log(body.topics.rows);
         body.length;
         expect(body.topics.rows.length).toBe(3);
       });
@@ -34,6 +33,30 @@ describe("Get api/topics", () => {
             expect.objectContaining({
               slug: expect.any(String),
               description: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+});
+
+describe("Get specific article ID", () => {
+  test("Should responsd with only the articles that match the id", () => {
+    return request(app)
+      .get("/api/article/3")
+      .then(({ body }) => {
+        const articlesArr = body.articleByID.rows;
+        console.log(articlesArr);
+        articlesArr.forEach((article) => {
+          expect(article).toEqual(
+            expect.objectContaining({
+              author: expect.any(String),
+              title: expect.any(String),
+              article_id: expect.any(Number),
+              body: expect.any(String),
+              topic: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
             })
           );
         });
