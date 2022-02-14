@@ -41,24 +41,21 @@ describe("Get api/topics", () => {
 });
 
 describe("Get specific article ID", () => {
-  test("Should responsd with only the articles that match the id", () => {
+  test("Should respond with only the articles that match the id", () => {
     return request(app)
       .get("/api/article/3")
       .expect(200)
       .then(({ body }) => {
-        const articlesArr = body.articleByID;
-        articlesArr.forEach((article) => {
-          expect(article).toEqual(
-            expect.objectContaining({
-              author: expect.any(String),
-              title: expect.any(String),
-              article_id: expect.any(Number),
-              body: expect.any(String),
-              topic: expect.any(String),
-              created_at: expect.any(String),
-              votes: expect.any(Number),
-            })
-          );
+        expect(body).toEqual({
+          articleByID: {
+            title: "Eight pug gifs that remind me of mitch",
+            topic: "mitch",
+            author: "icellusedkars",
+            body: "some gifs",
+            created_at: "2020-11-03T09:12:00.000Z",
+            votes: 0,
+            article_id: 3,
+          },
         });
       });
   });

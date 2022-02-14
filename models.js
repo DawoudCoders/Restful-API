@@ -13,7 +13,8 @@ exports.fetchArticleById = (Id) => {
     .then((response) => {
       if (response.rows.length === 0) {
         return Promise.reject({ status: 404, msg: "article not found" });
+      } else {
+        return response.rows;
       }
-      return response.rows;
     });
 };
