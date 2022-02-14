@@ -44,9 +44,9 @@ describe("Get specific article ID", () => {
   test("Should responsd with only the articles that match the id", () => {
     return request(app)
       .get("/api/article/3")
+      .expect(200)
       .then(({ body }) => {
-        const articlesArr = body.articleByID.rows;
-        console.log(articlesArr);
+        const articlesArr = body.articleByID;
         articlesArr.forEach((article) => {
           expect(article).toEqual(
             expect.objectContaining({
@@ -60,6 +60,14 @@ describe("Get specific article ID", () => {
             })
           );
         });
+      });
+  });
+  test("Should return article not found if id not valid ", () => {
+    return request(app)
+      .get("/api/article/9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
       });
   });
 });

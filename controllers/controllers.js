@@ -7,7 +7,9 @@ exports.getTopics = (req, res, next) => {
 };
 
 exports.getArticleById = (req, res, next) => {
-  fetchArticleById(req.params).then((response) => {
-    res.status(200).send({ articleByID: response });
-  });
+  fetchArticleById(req.params)
+    .then((response) => {
+      res.status(200).send({ articleByID: response });
+    })
+    .catch(next);
 };
