@@ -18,7 +18,6 @@ describe("Get api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then(({ body }) => {
-        console.log(body.topics.rows);
         body.length;
         expect(body.topics.rows.length).toBe(3);
       });
@@ -37,6 +36,35 @@ describe("Get api/topics", () => {
             })
           );
         });
+      });
+  });
+});
+
+describe("Get specific article ID", () => {
+  test("Should respond with only the articles that match the id", () => {
+    return request(app)
+      .get("/api/article/3")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({
+          articleByID: {
+            title: "Eight pug gifs that remind me of mitch",
+            topic: "mitch",
+            author: "icellusedkars",
+            body: "some gifs",
+            created_at: "2020-11-03T09:12:00.000Z",
+            votes: 0,
+            article_id: 3,
+          },
+        });
+      });
+  });
+  test("Should return article not found if id not valid ", () => {
+    return request(app)
+      .get("/api/article/9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
       });
   });
 });
