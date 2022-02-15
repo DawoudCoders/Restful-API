@@ -125,9 +125,10 @@ describe("PATCH /api/articles/:article_id ", () => {
       });
   });
   //IS THIS NEEDED HERE?
-  test("status 404: if article non existant", () => {
+  test.only("status 404: if article non existant", () => {
     return request(app)
-      .get("/api/article/9999")
+      .patch("/api/article/9999")
+      .send({ inc_votes: "12" })
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Article not found");
@@ -183,5 +184,15 @@ describe("GET /api/users", () => {
         });
       });
   });
-  
+});
+
+describe("GET /api/articles", () => {
+  test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.length).toBe(12);
+      });
+  });
 });
