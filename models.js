@@ -18,3 +18,14 @@ exports.fetchArticleById = (Id) => {
       }
     });
 };
+
+exports.patchArticleModel = (body, params) => {
+  return db
+    .query(
+      "UPDATE articles SET votes = (votes + $1) WHERE article_id = $2 RETURNING*",
+      [body.inc_votes, params.id]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
+};

@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
-const { getTopics, getArticleById } = require("./controllers/controllers");
+const {
+  getTopics,
+  getArticleById,
+  patchArticle,
+} = require("./controllers/controllers");
 const {
   pathFindingError,
   handle400s,
@@ -11,7 +15,7 @@ app.use(express.json());
 app.get("/api/topics", getTopics);
 app.get("/api/article/:id", getArticleById);
 
-//app.patch("/api/article/:id", patchArticle);
+app.patch("/api/article/:id", patchArticle);
 
 app.all("/*", pathFindingError);
 
