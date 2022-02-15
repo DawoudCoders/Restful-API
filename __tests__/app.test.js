@@ -68,3 +68,69 @@ describe("Get specific article ID", () => {
       });
   });
 });
+
+describe.only("PATCH /api/articles/:article_id ", () => {
+  test("Status 200 : responds with status 200 ", () => {
+    return request(app)
+      .patch("/api/article/3")
+      .send({ inc_votes: 1 })
+      .expect(200);
+  });
+  test("Status 200 : responds with an object of the updated article ", () => {
+    return request(app)
+      .patch("/api/article/3")
+      .send({ inc_votes: 1 })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({
+          updatedArticle: {
+            article_id: 3,
+            title: "Eight pug gifs that remind me of mitch",
+            topic: "mitch",
+            author: "icellusedkars",
+            body: "some gifs",
+            created_at: "2020-11-03T09:12:00.000Z",
+            votes: 1,
+          },
+        });
+      });
+  });
+  test("Status 200 : responds with an object of the updated article -- SECOND TEST ", () => {
+    return request(app)
+      .patch("/api/article/3")
+      .send({ inc_votes: -15 })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toEqual({
+          updatedArticle: {
+            article_id: 3,
+            title: "Eight pug gifs that remind me of mitch",
+            topic: "mitch",
+            author: "icellusedkars",
+            body: "some gifs",
+            created_at: "2020-11-03T09:12:00.000Z",
+            votes: -15,
+          },
+        });
+      });
+  });
+  //bad path
+  test("status 400: respond with status 400 for invalid update request i.e inc_votes: aaa", () => {
+    return request(app)
+      .patch("/api/article/3")
+      .send({ inc_votes: "aaa" })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("invalid input type");
+      });
+  });
+  //IS THIS NEEDED HERE?
+  test("status 404: if article non existant", () => {
+    return request(app)
+      .get("/api/article/9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
+  });
+});
