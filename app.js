@@ -4,6 +4,7 @@ const {
   getTopics,
   getArticleById,
   patchArticle,
+  getUsers,
 } = require("./controllers/controllers");
 const {
   pathFindingError,
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.get("/api/topics", getTopics);
 app.get("/api/article/:id", getArticleById);
+app.get("/api/users", getUsers);
 
 app.patch("/api/article/:id", patchArticle);
 
