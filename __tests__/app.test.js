@@ -124,8 +124,8 @@ describe("PATCH /api/articles/:article_id ", () => {
         expect(body.msg).toBe("invalid input type");
       });
   });
-  //IS THIS NEEDED HERE?
-  test.only("status 404: if article non existant", () => {
+
+  test("status 404: if article non existant", () => {
     return request(app)
       .patch("/api/article/9999")
       .send({ inc_votes: "12" })
@@ -186,13 +186,14 @@ describe("GET /api/users", () => {
   });
 });
 
-describe("GET /api/articles", () => {
+describe.only("GET /api/articles", () => {
   test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
       .then(({ body }) => {
-        expect(body.length).toBe(12);
+
+        expect(body.articles.length).toBe(12);
       });
   });
 });
