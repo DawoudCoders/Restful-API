@@ -69,7 +69,7 @@ describe("Get specific article ID", () => {
   });
 });
 
-describe.only("PATCH /api/articles/:article_id ", () => {
+describe("PATCH /api/articles/:article_id ", () => {
   test("Status 200 : responds with status 200 ", () => {
     return request(app)
       .patch("/api/article/3")
@@ -131,6 +131,42 @@ describe.only("PATCH /api/articles/:article_id ", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Article not found");
+      });
+  });
+});
+
+describe("GET /api/users", () => {
+  test("status 200: should respond with object of array of objects", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        expect(body.users.length).toBe(4);
+        console.log(body);
+        expect(body).toEqual({
+          users: [
+            {
+              username: "butter_bridge",
+            },
+            {
+              username: "icellusedkars",
+            },
+            {
+              username: "rogersop",
+            },
+            {
+              username: "lurker",
+            },
+          ],
+        });
+        body.users.forEach((object) => {
+          expect(object).toEqual(
+            expect.objectContaining({
+              username: expect.any(String),
+            })
+          );
+        });
       });
   });
 });

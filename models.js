@@ -29,3 +29,9 @@ exports.patchArticleModel = (body, params) => {
       return rows[0];
     });
 };
+
+exports.fetchUsers = () => {
+  return db.query("SELECT username FROM users").then((response) => {
+    return response.rows;
+  });
+};

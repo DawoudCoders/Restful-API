@@ -2,6 +2,7 @@ const {
   fetchTopics,
   fetchArticleById,
   patchArticleModel,
+  fetchUsers,
 } = require("../models");
 
 exports.getTopics = (req, res, next) => {
@@ -24,4 +25,10 @@ exports.patchArticle = (req, res, next) => {
       res.status(200).send({ updatedArticle: response });
     })
     .catch(next);
+};
+
+exports.getUsers = (req, res, next) => {
+  fetchUsers().then((response) => {
+    res.status(200).send({ users: response });
+  });
 };
