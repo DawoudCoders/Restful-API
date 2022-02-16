@@ -192,8 +192,20 @@ describe.only("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then(({ body }) => {
-
         expect(body.articles.length).toBe(12);
+
+        body.articles.forEach((article) => {
+          expect(article).toEqual(
+            expect.objectContaining({
+              title: expect.any(String),
+              topic: expect.any(String),
+              author: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
+              article_id: expect.any(Number),
+            })
+          );
+        });
       });
   });
 });
