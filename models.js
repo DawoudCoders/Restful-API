@@ -42,15 +42,9 @@ exports.fetchUsers = () => {
 };
 
 exports.fetchArticles = () => {
-  const author = "author";
-  const title = "title";
-  const article_id = "article_id";
-  const topic = "topic";
-  const created_at = "created_at";
-  const votes = "votes";
   return db
     .query(
-      "SELECT author, title, article_id, topic, created_at, votes FROM articles;"
+      "SELECT author, title, article_id, topic, created_at, votes FROM articles ORDER BY created_at ASC;"
     )
     .then(({ rows }) => {
       return rows;

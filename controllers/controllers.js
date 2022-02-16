@@ -36,8 +36,6 @@ exports.getUsers = (req, res, next) => {
 
 exports.getArticles = (req, res, next) => {
   fetchArticles().then((response) => {
-    response.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
-
     res.status(200).send({ articles: response });
   });
 };
