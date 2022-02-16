@@ -3,6 +3,7 @@ const {
   fetchArticleById,
   patchArticleModel,
   fetchUsers,
+  fetchArticles,
 } = require("../models");
 
 exports.getTopics = (req, res, next) => {
@@ -30,5 +31,11 @@ exports.patchArticle = (req, res, next) => {
 exports.getUsers = (req, res, next) => {
   fetchUsers().then((response) => {
     res.status(200).send({ users: response });
+  });
+};
+
+exports.getArticles = (req, res, next) => {
+  fetchArticles().then((response) => {
+    res.status(200).send({ articles: response });
   });
 };

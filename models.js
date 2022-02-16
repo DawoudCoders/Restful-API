@@ -26,7 +26,12 @@ exports.patchArticleModel = (body, params) => {
       [body.inc_votes, params.id]
     )
     .then(({ rows }) => {
-      return rows[0];
+      if (rows.length == 0) {
+        return Promise.reject({ status: 404, msg: "article not found" });
+      } else {
+        console.log(rows);
+        return rows[0];
+      }
     });
 };
 
@@ -34,4 +39,14 @@ exports.fetchUsers = () => {
   return db.query("SELECT username FROM users").then((response) => {
     return response.rows;
   });
+};
+
+exports.fetchArticles = () => {
+  return db
+    .query(
+      "SELECT author, title, article_id, topic, created_at, votes FROM articles ORDER BY created_at ASC;"
+    )
+    .then(({ rows }) => {
+      return rows;
+    });
 };

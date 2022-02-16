@@ -3,6 +3,7 @@ const request = require("supertest");
 const app = require("../app");
 const seed = require("../db/seeds/seed");
 const testData = require("../db/data/test-data/index");
+require("jest-sorted");
 
 beforeEach(() => {
   return seed(testData);
@@ -124,10 +125,11 @@ describe("PATCH /api/articles/:article_id ", () => {
         expect(body.msg).toBe("invalid input type");
       });
   });
-  //IS THIS NEEDED HERE?
+
   test("status 404: if article non existant", () => {
     return request(app)
-      .get("/api/article/9999")
+      .patch("/api/article/9999")
+      .send({ inc_votes: "12" })
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Article not found");
@@ -169,4 +171,5 @@ describe("GET /api/users", () => {
         });
       });
   });
+
 });
