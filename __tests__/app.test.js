@@ -150,27 +150,15 @@ describe("GET /api/users", () => {
           users: [
             {
               username: "butter_bridge",
-              name: "jonny",
-              avatar_url:
-                "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
             },
             {
               username: "icellusedkars",
-              name: "sam",
-              avatar_url:
-                "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4",
             },
             {
               username: "rogersop",
-              name: "paul",
-              avatar_url:
-                "https://avatars2.githubusercontent.com/u/24394918?s=400&v=4",
             },
             {
               username: "lurker",
-              name: "do_nothing",
-              avatar_url:
-                "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
             },
           ],
         });
@@ -178,37 +166,10 @@ describe("GET /api/users", () => {
           expect(object).toEqual(
             expect.objectContaining({
               username: expect.any(String),
-              name: expect.any(String),
-              avatar_url: expect.any(String),
             })
           );
         });
       });
   });
-});
 
-describe.only("GET /api/articles", () => {
-  test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
-    return request(app)
-      .get("/api/articles")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.articles.length).toBe(12);
-
-        body.articles.forEach((article) => {
-          expect(article).toEqual(
-            expect.objectContaining({
-              title: expect.any(String),
-              topic: expect.any(String),
-              author: expect.any(String),
-              created_at: expect.any(String),
-              votes: expect.any(Number),
-              article_id: expect.any(Number),
-            })
-          );
-        });
-        expect(body.articles).toBeSortedBy("created_at");
-      });
-  });
-  //badPath no 400 or 404 only path not found error
 });
