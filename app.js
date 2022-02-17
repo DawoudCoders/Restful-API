@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
-const {
-  getTopics,
-  getArticleById,
-  patchArticle,
-  getUsers,
-  getArticles,
-} = require("./controllers/controllers");
+
+const { getTopics } = require("./controllers/getTopics");
+const { getArticleById } = require("./controllers/getArticleById");
+const { patchArticle } = require("./controllers/patchArticle");
+const { getUsers } = require("./controllers/getUsers");
+const { getArticles } = require("./controllers/getArticles");
+
 const {
   pathFindingError,
   handle400s,
@@ -25,11 +25,5 @@ app.all("/*", pathFindingError);
 
 //custom handling error - article id not valid
 app.use(handle400s);
-
-
-/* app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(404).send("article id not valid");
-}); */
 
 module.exports = app;

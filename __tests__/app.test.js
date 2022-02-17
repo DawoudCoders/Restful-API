@@ -55,9 +55,29 @@ describe("Get specific article ID", () => {
             body: "some gifs",
             created_at: "2020-11-03T09:12:00.000Z",
             votes: 0,
+            comment_count: "2",
             article_id: 3,
           },
         });
+      });
+  });
+  test("Should return correct key types of object", () => {
+    return request(app)
+      .get("/api/article/3")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articleByID).toEqual(
+          expect.objectContaining({
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            body: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            comment_count: expect.any(String),
+            article_id: expect.any(Number),
+          })
+        );
       });
   });
   test("Should return article not found if id not valid ", () => {
@@ -171,5 +191,30 @@ describe("GET /api/users", () => {
         });
       });
   });
-
 });
+
+describe("GET /api/articles", () => {
+  test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles.length).toBe(12);
+
+        body.articles.forEach((article) => {
+          expect(article).toEqual(
+            expect.objectContaining({
+              title: expect.any(String),
+              topic: expect.any(String),
+              author: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
+              article_id: expect.any(Number),
+            })
+          );
+        });
+        expect(body.articles).toBeSortedBy("created_at");
+      });
+  });
+});
+//badPath no 400 or 404 only path not found error
