@@ -239,7 +239,15 @@ describe("GET /api/articles/:id/comments", () => {
         });
       });
   });
-  test("Status 404: Bad request if invalid input type used by user", () => {
+  test("Status 400: bad req if invalid  input type used by user ", () => {
+    return request(app)
+      .get("/api/articles/aaa/comments")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("invalid input type");
+      });
+  });
+  test("Status 404:Article not found ", () => {
     return request(app)
       .get("/api/articles/9999/comments")
       .expect(404)
