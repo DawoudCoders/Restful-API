@@ -192,7 +192,7 @@ describe("GET /api/users", () => {
   });
 });
 
-describe("GET /api/articles", () => {
+describe.only("GET /api/articles", () => {
   test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
     return request(app)
       .get("/api/articles")
@@ -209,6 +209,7 @@ describe("GET /api/articles", () => {
               created_at: expect.any(String),
               votes: expect.any(Number),
               article_id: expect.any(Number),
+              comment_count: expect.any(String),
             })
           );
         });
