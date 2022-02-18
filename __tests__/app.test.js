@@ -192,7 +192,7 @@ describe("GET /api/users", () => {
   });
 });
 
-describe.only("GET /api/articles", () => {
+describe("GET /api/articles", () => {
   test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
     return request(app)
       .get("/api/articles")
@@ -254,6 +254,36 @@ describe("GET /api/articles/:id/comments", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Article not found");
+      });
+  });
+});
+
+describe.only("POST /api/articles/:article_id/comments", () => {
+  test("Status 200: should response with the posted comment", () => {
+    return request(app)
+      .post("/api/articles/3/comments")
+      .send({ username: "icellusedkars", body: "This is the body" })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.post).toEqual(
+          expect.objectContaining({
+            comment_id: 19,
+            votes: 0,
+            body: "This is the body",
+            author: "icellusedkars",
+            created_at: expect.any(String),
+            article_id: 3,
+          })
+        );
+      });
+  });
+  test("Status 400: return bad request if the user includes keys/misses out keys for the post  ", () => {
+    return request(app)
+      .post("/api/articles/3/comments")
+      .send({ username: "icellusedkars" })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("invalid input type / Missing arguments");
       });
   });
 });

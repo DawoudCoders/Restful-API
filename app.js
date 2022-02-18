@@ -7,10 +7,9 @@ const { patchArticle } = require("./controllers/patchArticle");
 const { getUsers } = require("./controllers/getUsers");
 const { getArticles } = require("./controllers/getArticles");
 const { getComments } = require("./controllers/getComments");
-const {
-  pathFindingError,
-  handle400s,
-} = require("./controllers/errorHandling.controllers");
+const {postComment} = require("./controllers/postComment.js")
+
+const {pathFindingError,handle400s,} = require("./controllers/errorHandling.controllers");
 
 app.use(express.json());
 
@@ -21,6 +20,8 @@ app.get("/api/articles", getArticles);
 app.get("/api/articles/:article_id/comments", getComments);
 
 app.patch("/api/article/:id", patchArticle);
+
+app.post("/api/articles/:id/comments", postComment);
 
 app.all("/*", pathFindingError);
 
