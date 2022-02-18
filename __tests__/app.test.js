@@ -42,7 +42,7 @@ describe("Get api/topics", () => {
 });
 
 describe("Get specific article ID", () => {
-  test("Should respond with only the articles that match the id", () => {
+  test("Should respond with only the comments that match the id", () => {
     return request(app)
       .get("/api/article/3")
       .expect(200)
@@ -163,9 +163,8 @@ describe("GET /api/users", () => {
       .get("/api/users")
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body.users.length).toBe(4);
-        console.log(body);
+
         expect(body).toEqual({
           users: [
             {
@@ -218,3 +217,42 @@ describe("GET /api/articles", () => {
   });
 });
 //badPath no 400 or 404 only path not found error
+
+describe("GET /api/articles/:id/comments", () => {
+  test("Status 200:Should response with an array of comment objects", () => {
+    return request(app)
+      .get("/api/articles/3/comments")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments.length).toBe(2);
+        body.comments.forEach((comment) => {
+          expect(comment).toEqual(
+            expect.objectContaining({
+              comment_id: expect.any(Number),
+              votes: expect.any(Number),
+              body: expect.any(String),
+              author: expect.any(String),
+              created_at: expect.any(String),
+              article_id: 3,
+            })
+          );
+        });
+      });
+  });
+  test("Status 400: bad req if invalid  input type used by user ", () => {
+    return request(app)
+      .get("/api/articles/aaa/comments")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("invalid input type");
+      });
+  });
+  test("Status 404:Article not found ", () => {
+    return request(app)
+      .get("/api/articles/9999/comments")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
+  });
+});

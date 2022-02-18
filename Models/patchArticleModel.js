@@ -11,7 +11,6 @@ exports.patchArticleModel = (body, params) => {
       if (rows.length == 0) {
         return Promise.reject({ status: 404, msg: "article not found" });
       } else {
-        console.log(rows);
         return rows[0];
       }
     });

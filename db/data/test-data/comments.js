@@ -69,6 +69,7 @@ module.exports = [
     article_id: 3,
     created_at: 1592641440000,
   },
+
   {
     body: "Ambidextrous marsupial",
     votes: 0,
