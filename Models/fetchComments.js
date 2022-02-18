@@ -2,9 +2,10 @@ const { query } = require("../db/connection");
 const db = require("../db/connection");
 
 exports.fetchComments = (id) => {
-
-  db.query("SELECT", [id.article_id]).then((response) => {
-    console.log(response);
-    return response.rows;
-  });
+  return db
+    .query(`SELECT * FROM comments WHERE article_id = $1; `, [id.article_id])
+    .then((response) => {
+      if(response.rows.length === 0){ return Promise.reject({ status: 404, msg: "article not found" });}
+      return response.rows;
+    });
 };

@@ -163,9 +163,8 @@ describe("GET /api/users", () => {
       .get("/api/users")
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body.users.length).toBe(4);
-        console.log(body);
+
         expect(body).toEqual({
           users: [
             {
@@ -219,53 +218,33 @@ describe("GET /api/articles", () => {
 });
 //badPath no 400 or 404 only path not found error
 
-/* describe("GET /api/articles/:id/comments", () => {
+describe("GET /api/articles/:id/comments", () => {
   test("Status 200:Should response with an array of comment objects", () => {
     return request(app)
       .get("/api/articles/3/comments")
       .expect(200)
       .then(({ body }) => {
-        expect(body).toEqual({
-          comments: [
-            {
-              body: "git push origin master",
-              votes: 0,
-              author: "icellusedkars",
-              article_id: 3,
-              created_at: 1592641440000,
-              comment_id: 1,
-            },
-            {
-              body: "Ambidextrous marsupial",
-              votes: 0,
-              author: "icellusedkars",
-              article_id: 3,
-              created_at: 1600560600000,
-              comment_id: 2,
-            },
-          ],
-        });
-      });
-  });
-  test("Status 200:Should response with an array of comment objects", () => {
-    return request(app)
-      .get("/api/articles")
-      .expect(200)
-      .then(({ body }) => {
         expect(body.comments.length).toBe(2);
-
         body.comments.forEach((comment) => {
           expect(comment).toEqual(
             expect.objectContaining({
-              comment_id: expect.any(String),
+              comment_id: expect.any(Number),
               votes: expect.any(Number),
               body: expect.any(String),
               author: expect.any(String),
               created_at: expect.any(String),
+              article_id: 3,
             })
           );
         });
       });
   });
+  test("Status 404: Bad request if invalid input type used by user", () => {
+    return request(app)
+      .get("/api/articles/9999/comments")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
+  });
 });
- */
