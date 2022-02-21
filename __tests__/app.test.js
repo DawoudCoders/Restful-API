@@ -287,3 +287,23 @@ describe("POST /api/articles/:article_id/comments", () => {
       });
   });
 });
+//unchecked from here
+describe("DELETE /api/comments/:comment_id", () => {
+  test("status 204: Should response with no content and 204 if succesful", () => {
+    return request(app)
+      .delete("/api/comments/6")
+      .expect(204)
+      .then(() => {
+        return request(app).get("/api/articles/16/comments").expect(404);
+      });
+  });
+  test("status 404: if comment doesn't exist", () => {
+    return request(app).delete("/api/comments/9999").expect(404);
+  });
+  test("status 404: if comment doesn't exist", () => {
+    return request(app).delete("/api/comments/9999").expect(404);
+  });
+  test("status 400: if invalid input type", () => {
+    return request(app).delete("/api/comments/aaa").expect(400);
+  });
+});
