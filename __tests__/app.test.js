@@ -258,7 +258,7 @@ describe("GET /api/articles/:id/comments", () => {
   });
 });
 
-describe.only("POST /api/articles/:article_id/comments", () => {
+describe("POST /api/articles/:article_id/comments", () => {
   test("Status 200: should response with the posted comment", () => {
     return request(app)
       .post("/api/articles/3/comments")
