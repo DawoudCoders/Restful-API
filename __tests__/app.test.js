@@ -294,15 +294,16 @@ describe("DELETE /api/comments/:comment_id", () => {
       .delete("/api/comments/6")
       .expect(204)
       .then(() => {
-        return request(app)
-          .get("/api/articles/16/comments")
-          .expect(404)
-          .then((response) => {
-            console.log(response.body.comments);
-
-            });
-          });
+        return request(app).get("/api/articles/16/comments").expect(404);
       });
-    //test("status 404: if comment doesn't exist", () => {});
-
+  });
+  test("status 404: if comment doesn't exist", () => {
+    return request(app).delete("/api/comments/9999").expect(404);
+  });
+  test("status 404: if comment doesn't exist", () => {
+    return request(app).delete("/api/comments/9999").expect(404);
+  });
+  test("status 400: if invalid input type", () => {
+    return request(app).delete("/api/comments/aaa").expect(400);
+  });
 });
