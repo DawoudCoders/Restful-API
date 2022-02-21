@@ -295,14 +295,14 @@ describe("DELETE /api/comments/:comment_id", () => {
       .expect(204)
       .then(() => {
         return request(app)
-          .get("/api/articles/6/comments")
+          .get("/api/articles/16/comments")
           .expect(404)
           .then((response) => {
             console.log(response.body.comments);
+
+            });
           });
       });
-  });
-  test("status 404: if comment doesn't exist", ()=>{
-    
-  });
+    //test("status 404: if comment doesn't exist", () => {});
+
 });
