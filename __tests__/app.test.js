@@ -3,6 +3,7 @@ const request = require("supertest");
 const app = require("../app");
 const seed = require("../db/seeds/seed");
 const testData = require("../db/data/test-data/index");
+
 require("jest-sorted");
 
 beforeEach(() => {
@@ -243,8 +244,18 @@ describe.only("GET /api/articles", () => {
       .get("/api/articles?sort_by=votes&order=DESC")
       .expect(200)
       .then(({ body }) => {
-       
         expect(body.articles).toBeSortedBy("votes", { descending: true });
+      });
+  });
+
+  test.only("Status 200: Should accept a query of topics and filter by given topic", () => {
+    return request(app)
+      .get("/api/articles?topic=cats")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body.articles);
+        expect(body.articles.length).toBe(1);
+        expect(body.articles[0].topic).toBe("cats");
       });
   });
 
