@@ -248,7 +248,7 @@ describe.only("GET /api/articles", () => {
       });
   });
 
-  test.only("Status 200: Should accept a query of topics and filter by given topic", () => {
+  xtest("Status 200: Should accept a query of topics and filter by given topic", () => {
     return request(app)
       .get("/api/articles?topic=cats")
       .expect(200)
