@@ -23,5 +23,14 @@
         }
       ]
     }
+  },
+  "GET /api/article/:id": {
+    "description": "Serves a an artical object based on id",
+    "queries": [],
+    "exampleResponse": {
+      "topics": [{ "slug": "football", "description": "Footie!" }]
+    }
+  },"GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
   }
 }

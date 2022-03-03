@@ -192,8 +192,8 @@ describe("GET /api/users", () => {
   });
 });
 
-describe("GET /api/articles", () => {
-  test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order", () => {
+describe.only("GET /api/articles", () => {
+  test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order by default", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -214,6 +214,46 @@ describe("GET /api/articles", () => {
           );
         });
         expect(body.articles).toBeSortedBy("created_at");
+      });
+  });
+  test("status 200: endpoint accepts and sorts by query given", () => {
+    return request(app)
+      .get("/api/articles?sort_by=votes")
+      .expect(200)
+      .then(({ body }) => {
+        body.articles.forEach((article) => {
+          expect(article).toEqual(
+            expect.objectContaining({
+              title: expect.any(String),
+              topic: expect.any(String),
+              author: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
+              article_id: expect.any(Number),
+              comment_count: expect.any(String),
+            })
+          );
+        });
+        expect(body.articles).toBeSortedBy("votes");
+      });
+  });
+
+  test("status 200: endpoint accepts query of order by desc", () => {
+    return request(app)
+      .get("/api/articles?sort_by=votes&order=DESC")
+      .expect(200)
+      .then(({ body }) => {
+       
+        expect(body.articles).toBeSortedBy("votes", { descending: true });
+      });
+  });
+
+  test("status 400: throw error if query not valid", () => {
+    return request(app)
+      .get("/api/articles?sort_by=invalidQuery")
+      .expect(400)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("Bad Request");
       });
   });
 });
