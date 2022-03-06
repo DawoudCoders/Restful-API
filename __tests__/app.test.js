@@ -42,7 +42,7 @@ describe("Get api/topics", () => {
   });
 });
 
-describe("Get specific article ID", () => {
+describe("GET /api/article/:id", () => {
   test("Should respond with only the comments that match the id", () => {
     return request(app)
       .get("/api/article/3")
@@ -193,7 +193,7 @@ describe("GET /api/users", () => {
   });
 });
 
-describe.only("GET /api/articles", () => {
+describe("GET /api/articles", () => {
   test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order by default", () => {
     return request(app)
       .get("/api/articles")
@@ -217,7 +217,7 @@ describe.only("GET /api/articles", () => {
         expect(body.articles).toBeSortedBy("created_at");
       });
   });
-  test("status 200: endpoint accepts and sorts by query given", () => {
+  test("status 200: endpoint accepts and SORTS BY query given", () => {
     return request(app)
       .get("/api/articles?sort_by=votes")
       .expect(200)
@@ -238,7 +238,7 @@ describe.only("GET /api/articles", () => {
         expect(body.articles).toBeSortedBy("votes");
       });
   });
-  test("status 200: endpoint accepts query of order by desc", () => {
+  test("status 200: endpoint accepts query of ORDER by desc", () => {
     return request(app)
       .get("/api/articles?sort_by=votes&order=DESC")
       .expect(200)
@@ -312,6 +312,7 @@ describe("POST /api/articles/:article_id/comments", () => {
       .send({ username: "icellusedkars", body: "This is the body" })
       .expect(200)
       .then(({ body }) => {
+       
         expect(body.post).toEqual(
           expect.objectContaining({
             comment_id: 19,
@@ -336,7 +337,7 @@ describe("POST /api/articles/:article_id/comments", () => {
 });
 //unchecked from here
 describe("DELETE /api/comments/:comment_id", () => {
-  test("status 204: Should response with no content and 204 if succesful", () => {
+  test("status 204: Should responsd with no content and 204 if succesful", () => {
     return request(app)
       .delete("/api/comments/6")
       .expect(204)
