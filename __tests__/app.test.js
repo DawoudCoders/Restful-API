@@ -193,7 +193,7 @@ describe("GET /api/users", () => {
   });
 });
 
-describe("GET /api/articles", () => {
+describe.only("GET /api/articles", () => {
   test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order by default", () => {
     return request(app)
       .get("/api/articles")
@@ -238,7 +238,6 @@ describe("GET /api/articles", () => {
         expect(body.articles).toBeSortedBy("votes");
       });
   });
-
   test("status 200: endpoint accepts query of order by desc", () => {
     return request(app)
       .get("/api/articles?sort_by=votes&order=DESC")
@@ -247,18 +246,15 @@ describe("GET /api/articles", () => {
         expect(body.articles).toBeSortedBy("votes", { descending: true });
       });
   });
-
   test("Status 200: Should accept a query of topics and filter by given topic", () => {
     return request(app)
       .get("/api/articles?topic=cats")
       .expect(200)
       .then(({ body }) => {
-        console.log(body.articles);
         expect(body.articles.length).toBe(1);
         expect(body.articles[0].topic).toBe("cats");
       });
   });
-
   test("status 400: throw error if query not valid", () => {
     return request(app)
       .get("/api/articles?sort_by=invalidQuery")
