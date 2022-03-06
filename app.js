@@ -13,6 +13,9 @@ const { deleteComment } = require("./controllers/deleteComment.js");
 const {
   pathFindingError,
   handle400s,
+  handle404,
+  handleCustomErrors,
+  handleOtherErrors,
 } = require("./controllers/errorHandling.controllers");
 
 app.use(express.json());
@@ -31,7 +34,9 @@ app.delete("/api/comments/:comment_id", deleteComment);
 
 app.all("/*", pathFindingError);
 
-//custom handling error - article id not valid
 app.use(handle400s);
+app.use(handle404);
+app.use(handleCustomErrors);
+app.use(handleOtherErrors);
 
 module.exports = app;

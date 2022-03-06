@@ -193,7 +193,7 @@ describe("GET /api/users", () => {
   });
 });
 
-describe.only("GET /api/articles", () => {
+describe("GET /api/articles", () => {
   test("Status 200: return with array of objects ommiting the article body & should be sorted in descending order by default", () => {
     return request(app)
       .get("/api/articles")
@@ -248,7 +248,7 @@ describe.only("GET /api/articles", () => {
       });
   });
 
-  xtest("Status 200: Should accept a query of topics and filter by given topic", () => {
+  test("Status 200: Should accept a query of topics and filter by given topic", () => {
     return request(app)
       .get("/api/articles?topic=cats")
       .expect(200)
