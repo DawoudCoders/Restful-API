@@ -136,7 +136,7 @@ describe("PATCH /api/articles/:article_id ", () => {
         });
       });
   });
-  //bad path
+
   test("status 400: respond with status 400 for invalid update request i.e inc_votes: aaa", () => {
     return request(app)
       .patch("/api/article/3")
@@ -351,6 +351,56 @@ describe("DELETE /api/comments/:comment_id", () => {
   });
   test("status 400: if invalid input type", () => {
     return request(app).delete("/api/comments/aaa").expect(400);
+  });
+
+  describe("GET /api/articles/:id/comments", () => {
+    test("Status 200:Should response with an array of comment objects", () => {
+      return request(app)
+        .get("/api/articles/3/comments")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comments.length).toBe(2);
+          body.comments.forEach((comment) => {
+            expect(comment).toEqual(
+              expect.objectContaining({
+                comment_id: expect.any(Number),
+                votes: expect.any(Number),
+                body: expect.any(String),
+                author: expect.any(String),
+                created_at: expect.any(String),
+                article_id: 3,
+              })
+            );
+          });
+        });
+    });
+    test("Status 400: bad req if invalid  input type used by user ", () => {
+      return request(app)
+        .get("/api/articles/aaa/comments")
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe("invalid input type");
+        });
+    });
+    test("Status 404:Article not found ", () => {
+      return request(app)
+        .get("/api/articles/9999/comments")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Article not found");
+        });
+    });
+  });
+
+  describe("GET /api/users/:username", () => {
+    test("Status 200: should respond with username if valid", () => {
+      return request(app)
+      .get("/api/users/tickle122")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toBe("tickle122");
+      });
+    });
   });
 });
 
