@@ -11,5 +11,5 @@ To use:
 
 4)For local use, run script "npm start" in terminal. This will allow a local version of the app to listen for use with 3rd party tools such as insomnia. 
 
-
-
+A link to the hosted version of the API: 
+https://first-heroku-hosting-project.herokuapp.com/

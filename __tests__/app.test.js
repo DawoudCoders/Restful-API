@@ -21,7 +21,7 @@ describe("Get api/topics", () => {
       .expect(200)
       .then(({ body }) => {
         body.length;
-        expect(body.topics.rows.length).toBe(3);
+        expect(body.topics.length).toBe(3);
       });
   });
   test("Should return with an array of object, all of which have a slug and description key  ", () => {
@@ -29,7 +29,7 @@ describe("Get api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then(({ body }) => {
-        const topicsArr = body.topics.rows;
+        const topicsArr = body.topics;
         topicsArr.forEach((topic) => {
           expect(topic).toEqual(
             expect.objectContaining({
