@@ -265,7 +265,6 @@ describe("GET /api/articles", () => {
   });
 });
 
-
 describe("GET /api/articles/:id/comments", () => {
   test("Status 200:Should response with an array of comment objects", () => {
     return request(app)
@@ -312,7 +311,6 @@ describe("POST /api/articles/:article_id/comments", () => {
       .send({ username: "icellusedkars", body: "This is the body" })
       .expect(200)
       .then(({ body }) => {
-
         expect(body.post).toEqual(
           expect.objectContaining({
             comment_id: 19,
@@ -403,5 +401,29 @@ describe("DELETE /api/comments/:comment_id", () => {
         expect(body.user).toBe("tickle122");
       });
     });
+  });
+});
+
+describe("GET /api/users/:username", () => {
+  test("Status 200: should respond with username if valid", () => {
+    return request(app)
+      .get("/api/users/rogersop")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user[0]).toEqual({
+          avatar_url:
+            "https://avatars2.githubusercontent.com/u/24394918?s=400&v=4",
+          name: "paul",
+          username: "rogersop",
+        });
+      });
+  });
+  test("Status 404 if user does not exist", () => {
+    return request(app)
+      .get("/api/users/rogershuyg87tgop")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
   });
 });

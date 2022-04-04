@@ -2,6 +2,7 @@ const { query } = require("../db/connection");
 const db = require("../db/connection");
 
 exports.fetchArticles = (sort_by = "created_at", order = "ASC", topic) => {
+
   const validSortBys = [
     "title",
     "topic",

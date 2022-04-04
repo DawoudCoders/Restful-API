@@ -9,6 +9,7 @@ const { getArticles } = require("./controllers/getArticles");
 const { getComments } = require("./controllers/getComments");
 const { postComment } = require("./controllers/postComment.js");
 const { deleteComment } = require("./controllers/deleteComment.js");
+const { getUserByID } = require("./controllers/getUserByID.js");
 
 const {
   pathFindingError,
@@ -27,6 +28,7 @@ app.get("/api/articles/:id", getArticleById);
 app.get("/api/users", getUsers);
 app.get("/api/articles", getArticles);
 app.get("/api/articles/:article_id/comments", getComments);
+app.get("/api/users/:username", getUserByID);
 
 app.patch("/api/article/:id", patchArticle);
 
