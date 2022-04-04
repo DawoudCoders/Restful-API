@@ -45,7 +45,7 @@ describe("Get api/topics", () => {
 describe("GET /api/article/:id", () => {
   test("Should respond with only the comments that match the id", () => {
     return request(app)
-      .get("/api/article/3")
+      .get("/api/articles/3")
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({
@@ -64,7 +64,7 @@ describe("GET /api/article/:id", () => {
   });
   test("Should return correct key types of object", () => {
     return request(app)
-      .get("/api/article/3")
+      .get("/api/articles/3")
       .expect(200)
       .then(({ body }) => {
         expect(body.articleByID).toEqual(
@@ -83,7 +83,7 @@ describe("GET /api/article/:id", () => {
   });
   test("Should return article not found if id not valid ", () => {
     return request(app)
-      .get("/api/article/9999")
+      .get("/api/articles/9999")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Article not found");
