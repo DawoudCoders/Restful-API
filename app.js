@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/topics", getTopics);  
-app.get("/api/article/:id", getArticleById);
+app.get("/api/articles/:id", getArticleById);
 app.get("/api/users", getUsers);
 app.get("/api/articles", getArticles);
 app.get("/api/articles/:article_id/comments", getComments);
