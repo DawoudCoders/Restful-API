@@ -354,7 +354,7 @@ describe("DELETE /api/comments/:comment_id", () => {
   });
 });
 
-describe.only("GET /api/users/:username", () => {
+describe("GET /api/users/:username", () => {
   test("Status 200: should respond with username if valid", () => {
     return request(app)
       .get("/api/users/rogersop")
