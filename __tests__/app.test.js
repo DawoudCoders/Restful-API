@@ -49,7 +49,7 @@ describe("GET /api/article/:id", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({
-          articleByID: {
+          article: {
             title: "Eight pug gifs that remind me of mitch",
             topic: "mitch",
             author: "icellusedkars",
@@ -67,7 +67,7 @@ describe("GET /api/article/:id", () => {
       .get("/api/articles/3")
       .expect(200)
       .then(({ body }) => {
-        expect(body.articleByID).toEqual(
+        expect(body.article).toEqual(
           expect.objectContaining({
             title: expect.any(String),
             topic: expect.any(String),
