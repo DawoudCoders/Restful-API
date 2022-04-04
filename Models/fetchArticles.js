@@ -2,7 +2,6 @@ const { query } = require("../db/connection");
 const db = require("../db/connection");
 
 exports.fetchArticles = (sort_by = "created_at", order = "ASC", topic) => {
-  //does it make sense to include all of these?
   const validSortBys = [
     "title",
     "topic",
