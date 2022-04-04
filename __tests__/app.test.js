@@ -264,7 +264,6 @@ describe("GET /api/articles", () => {
       });
   });
 });
-//badPath no 400 or 404 only path not found error
 
 describe("GET /api/articles/:id/comments", () => {
   test("Status 200:Should response with an array of comment objects", () => {
@@ -312,7 +311,6 @@ describe("POST /api/articles/:article_id/comments", () => {
       .send({ username: "icellusedkars", body: "This is the body" })
       .expect(200)
       .then(({ body }) => {
-       
         expect(body.post).toEqual(
           expect.objectContaining({
             comment_id: 19,
@@ -335,7 +333,7 @@ describe("POST /api/articles/:article_id/comments", () => {
       });
   });
 });
-//unchecked from here
+
 describe("DELETE /api/comments/:comment_id", () => {
   test("status 204: Should responsd with no content and 204 if succesful", () => {
     return request(app)
@@ -353,5 +351,29 @@ describe("DELETE /api/comments/:comment_id", () => {
   });
   test("status 400: if invalid input type", () => {
     return request(app).delete("/api/comments/aaa").expect(400);
+  });
+});
+
+describe.only("GET /api/users/:username", () => {
+  test("Status 200: should respond with username if valid", () => {
+    return request(app)
+      .get("/api/users/rogersop")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user[0]).toEqual({
+          avatar_url:
+            "https://avatars2.githubusercontent.com/u/24394918?s=400&v=4",
+          name: "paul",
+          username: "rogersop",
+        });
+      });
+  });
+  test("Status 404 if user does not exist", () => {
+    return request(app)
+      .get("/api/users/rogershuyg87tgop")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
+      });
   });
 });
